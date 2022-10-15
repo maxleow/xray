@@ -88,7 +88,7 @@
         let matches = pm.info.requestName.match(regex);
         if (!matches) return;
 
-        let test_run_key = pm.globals.get("xray_testrun_key") || pm.collectionVariables.get("xray_testrun_key");
+        let test_run_key = pm.environment.get("xray_testrun_key") || pm.collectionVariables.get("xray_testrun_key");
 
         let evidences = this.encode(JSON.stringify({
             requestHeader: pm.request.headers,
