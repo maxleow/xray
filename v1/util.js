@@ -59,7 +59,7 @@
     },
     login: function(pm){
         let token_key = 'xray_token';
-        let token = pm.globals.get(token_key);
+        let token = pm.collectionVariables.get(token_key);
         if (token) return token;
 
         pm.sendRequest({
@@ -75,7 +75,7 @@
                 }
         }, function (err, response) {
             token = response.json();
-            pm.globals.set(token_key, token);
+            pm.collectionVariables.set(token_key, token);
         });
 
         return pm.globals.get(token_key);
