@@ -32,15 +32,16 @@
 
         let test_run_key = pm.collectionVariables.get("xray_testrun_key");
 
-        let evidences = Buffer.from(JSON.stringify({
+        let evidences = btoa(JSON.stringify({
             requestHeader: pm.request.headers,
             requestBody: pm.request.body,
             responseHeader: pm.response.headers,
             responseBody: pm.responseBody,
             responseCode: pm.response.code
-        }), 'utf-8').toString('base64');
+        }));
 
-        pm.sendRequest({
+        pm.sendRequest(
+            {
                 url: "https://xray.cloud.getxray.app/api/v2/import/execution",
                 method: "POST",
                 header: {
@@ -68,7 +69,8 @@
             },
             function (err, response) {
                 console.log(response.json());
-        });
+            }
+        );
     },
     init: function(pm){
       this.login(pm);
