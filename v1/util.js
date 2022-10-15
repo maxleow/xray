@@ -76,4 +76,4 @@ const xray = {
     }
 };
 
-module.exports = {xray};
+export default { xray };
