@@ -74,4 +74,4 @@
       this.login(pm);
       console.log("initialized");
     }
-};
+}
