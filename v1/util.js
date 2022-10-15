@@ -1,4 +1,4 @@
-const xray = {
+xray = {
     login: function(pm){
         let token_key = 'xray_token';
         let token = pm.globals.get(token_key);
@@ -75,5 +75,3 @@ const xray = {
       result = "FAILED";
     }
 };
-
-export default { xray };
