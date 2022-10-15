@@ -1,4 +1,4 @@
-xray = {
+{
     login: function(pm){
         let token_key = 'xray_token';
         let token = pm.globals.get(token_key);
@@ -72,6 +72,6 @@ xray = {
     },
     init: function(pm){
       this.login(pm);
-      result = "FAILED";
+      console.log("initialized");
     }
 };
