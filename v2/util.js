@@ -58,6 +58,10 @@
         return output;
     },
     loginXray: function(pm){
+        let xrayClientId = pm.environment.get("xray_client_id");
+        let xrayClientSecret = pm.environment.get("xray_client_secret");
+        if (!xrayClientId || !xrayClientSecret) return;
+        
         let token_key = 'xray_token';
         let token = pm.collectionVariables.get(token_key);
         if (token) return token;
@@ -69,8 +73,8 @@
                 body: {
                     mode: 'raw',
                     raw: JSON.stringify({
-                        "client_id": pm.environment.get("xray_client_id"),
-                        "client_secret": pm.environment.get("xray_client_secret")
+                        "client_id": xrayClientId,
+                        "client_secret": xrayClientSecret
                     })
                 }
         }, function (err, response) {
