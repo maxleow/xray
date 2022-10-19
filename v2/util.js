@@ -147,7 +147,7 @@
         var authUrl = pm.environment.get("Auth_Url");
         var username = pm.environment.get("OAuth_Username");
         var password = pm.environment.get("OAuth_Password");
-        var accessToken = pm.environment.set("OAuth_Token", accessToken);
+        var accessToken = pm.environment.get("OAuth_Token");
 
         if (!basicAuth && !username || !password) {
             console.log("skipping CSG Login");
