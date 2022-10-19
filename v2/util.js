@@ -142,7 +142,7 @@
     },
     loginCsg: function(pm) {
         var tokenTimestamp = pm.environment.get("OAuth_Timestamp");
-        var basicAuth = pm.collectionVariables.get("Basic_Auth");
+        var basicAuth = pm.environment.get("Basic_Auth");
         var expiresInTime = pm.environment.get("ExpiresInTime");
         var authUrl = pm.environment.get("Auth_Url");
         var username = pm.environment.get("OAuth_Username");
