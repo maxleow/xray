@@ -147,6 +147,7 @@
         var authUrl = pm.environment.get("Auth_Url");
         var username = pm.environment.get("OAuth_Username");
         var password = pm.environment.get("OAuth_Password");
+        var accessToken = pm.environment.set("OAuth_Token", accessToken);
 
         if (!basicAuth && !username || !password) {
             console.log("skipping CSG Login");
@@ -157,6 +158,7 @@
         var tokenDate = new Date(2022,1,1);
         if(tokenTimestamp){
             tokenDate = Date.parse(tokenTimestamp);
+            pm.request.headers.add("Authorization: Bearer " + accessToken);
         }
         if(!expiresInTime){
             expiresInTime = 60000; // Set default expiration time to 1 minutes
