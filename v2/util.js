@@ -161,7 +161,7 @@
         }
         if(!expiresInTime){
             expiresInTime = 60000; // Set default expiration time to 1 minutes
-        } if((new Date() - tokenDate) >= expiresInTime){
+        } if((new Date() - tokenDate) >= expiresInTime || !accessToken){
             pm.sendRequest({
                 url:  authUrl,
                 method: 'POST',
