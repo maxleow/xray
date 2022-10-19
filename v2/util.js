@@ -148,8 +148,6 @@
         var username = pm.environment.get("OAuth_Username");
         var password = pm.environment.get("OAuth_Password");
         var accessToken = pm.environment.set("OAuth_Token", accessToken);
-        
-        pm.request.headers.add("Authorization: Bearer " + accessToken);
 
         if (!basicAuth && !username || !password) {
             console.log("skipping CSG Login");
@@ -192,6 +190,8 @@
                     pm.environment.set("ExpiresInTime", expiresInTime);
                     pm.request.headers.add("Authorization: Bearer " + accessToken);
             });
+        } else {
+            pm.request.headers.add("Authorization: Bearer " + accessToken);
         }
     },
     init: function(pm){
