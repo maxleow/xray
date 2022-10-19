@@ -60,8 +60,11 @@
     loginXray: function(pm){
         let xrayClientId = pm.environment.get("xray_client_id");
         let xrayClientSecret = pm.environment.get("xray_client_secret");
-        if (!xrayClientId || !xrayClientSecret) return;
-        
+        if (!xrayClientId || !xrayClientSecret) {
+            console.log("Skip Login Xray: no client_id or client_secret.");
+            return;
+        }
+
         let token_key = 'xray_token';
         let token = pm.collectionVariables.get(token_key);
         if (token) return token;
@@ -90,7 +93,10 @@
 
         const regex = /[A-Z]{2,}-\d+/g;
         let matches = pm.info.requestName.match(regex);
-        if (!matches) return;
+        if (!matches) {
+            console.log("skipping Xray result import: no matched ticket.");
+            return;
+        };
 
         let test_run_key = pm.environment.get("xray_testrun_key") || pm.collectionVariables.get("xray_testrun_key");
 
@@ -98,7 +104,7 @@
             requestHeader: pm.request.headers,
             requestBody: pm.request.body,
             responseHeader: pm.response.headers,
-            responseBody: pm.responseBody,
+            responseBody: pm.response.text(),
             responseCode: pm.response.code
         }));
 
@@ -142,7 +148,10 @@
         var username = pm.environment.get("OAuth_Username");
         var password = pm.environment.get("OAuth_Password");
 
-        if (!basicAuth && !username || !password) return;
+        if (!basicAuth && !username || !password) {
+            console.log("skipping CSG Login");
+            return;
+        }
 
         // Refresh the OAuth token if necessary
         var tokenDate = new Date(2022,1,1);
