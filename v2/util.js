@@ -57,7 +57,7 @@
     
         return output;
     },
-    login: function(pm){
+    loginXray: function(pm){
         let token_key = 'xray_token';
         let token = pm.collectionVariables.get(token_key);
         if (token) return token;
@@ -104,7 +104,7 @@
                 method: "POST",
                 header: {
                     "Content-Type": "application/json",
-                    "Authorization": "Bearer " + this.login(pm)
+                    "Authorization": "Bearer " + this.loginXray(pm)
                 },
                 body: {
                     mode: 'raw',
@@ -130,7 +130,7 @@
             }
         );
     },
-    loginCsgSIT: function(pm) {
+    loginCsg: function(pm) {
         var tokenTimestamp = pm.environment.get("OAuth_Timestamp");
         var basicAuth = pm.collectionVariables.get("Basic_Auth");
         var expiresInTime = pm.environment.get("ExpiresInTime");
@@ -179,7 +179,8 @@
         }
     },
     init: function(pm){
-      this.login(pm);
+      this.loginXray(pm);
+      this.loginCsg(pm);
       console.log("initialized");
     }
 }
