@@ -158,10 +158,10 @@
         var tokenDate = new Date(2022,1,1);
         if(tokenTimestamp){
             tokenDate = Date.parse(tokenTimestamp);
-            pm.request.headers.add("Authorization: Bearer " + accessToken);
         }
         if(!expiresInTime){
             expiresInTime = 60000; // Set default expiration time to 1 minutes
+            pm.request.headers.add("Authorization: Bearer " + accessToken);
         } if((new Date() - tokenDate) >= expiresInTime){
             pm.sendRequest({
                 url:  authUrl,
