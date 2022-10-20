@@ -141,12 +141,12 @@
         );
     },
     loginCsg: function(pm) {
-        var tokenTimestamp = pm.environment.get("OAuth_Timestamp");
-        var basicAuth = pm.environment.get("Basic_Auth");
+        var tokenTimestamp = pm.environment.get("OAuth_Timestamp") || pm.collectionVariables.get("OAuth_Timestamp");
+        var basicAuth = pm.environment.get("Basic_Auth") || pm.collectionVariables.get("Basic_Auth");
         var expiresInTime = pm.environment.get("ExpiresInTime");
-        var authUrl = pm.environment.get("Auth_Url");
-        var username = pm.environment.get("OAuth_Username");
-        var password = pm.environment.get("OAuth_Password");
+        var authUrl = pm.environment.get("Auth_Url") || pm.collectionVariables.get("Auth_Url");
+        var username = pm.environment.get("OAuth_Username") || pm.collectionVariables.get("OAuth_Username");
+        var password = pm.environment.get("OAuth_Password") || pm.collectionVariables.get("OAuth_Password");
         var accessToken = pm.environment.get("OAuth_Token");
 
         if (!basicAuth && !username || !password) {
