@@ -85,7 +85,7 @@
             pm.collectionVariables.set(token_key, token);
         });
 
-        return pm.globals.get(token_key);
+        return pm.collectionVariables.get(token_key);
     },
     export_result: function(pm, result){
         let import_xray = Boolean(pm.environment.get("xray_enabled"));
