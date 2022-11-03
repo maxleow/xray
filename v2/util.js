@@ -66,7 +66,7 @@
         }
 
         let token_key = 'xray_token';
-        let token = pm.collectionVariables.get(token_key);
+        let token = pm.variables.get(token_key);
         if (token) return token;
 
         pm.sendRequest({
@@ -82,10 +82,10 @@
                 }
         }, function (err, response) {
             token = response.json();
-            pm.collectionVariables.set(token_key, token);
+            pm.variables.set(token_key, token);
         });
 
-        return pm.collectionVariables.get(token_key);
+        return pm.variables.get(token_key);
     },
     export_result: function(pm, result){
         let import_xray = Boolean(pm.environment.get("xray_enabled"));
