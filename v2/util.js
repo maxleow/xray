@@ -101,6 +101,7 @@
         let test_run_key = pm.environment.get("xray_testrun_key") || pm.collectionVariables.get("xray_testrun_key");
 
         let evidences = this.encode(JSON.stringify({
+            requestParams: pm.request.url.getQueryString(),
             requestHeader: pm.request.headers,
             requestBody: pm.request.body,
             responseHeader: pm.response.headers,
@@ -127,7 +128,7 @@
                                 "status" : result,
                                 "evidence": [{
                                     "data": evidences,
-                                    "filename": "request-and-response.json",
+                                    "filename": test_run_key + "_" + matches[0] + "_" + (new Date()).toISOString() + ".json",
                                     "contentType":"application/json"
                                 }]
                             }
