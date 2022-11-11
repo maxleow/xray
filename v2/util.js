@@ -101,6 +101,7 @@
         let test_run_key = pm.environment.get("xray_testrun_key") || pm.collectionVariables.get("xray_testrun_key");
 
         let evidences = this.encode(JSON.stringify({
+            requestUrl: pm.request.url.toString(),
             requestParams: pm.request.url.getQueryString(),
             requestHeader: pm.request.headers,
             requestBody: pm.request.body,
