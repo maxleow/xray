@@ -106,7 +106,7 @@
             requestHeader: pm.request.headers,
             requestBody: pm.request.raw,
             responseHeader: pm.response.headers,
-            responseBody: pm.response.text(),
+            responseBody: pm.response.json(),
             responseCode: pm.response.code
         }));
 
