@@ -104,7 +104,7 @@
             requestUrl: pm.request.url.toString(),
             requestParams: pm.request.url.getQueryString(),
             requestHeader: pm.request.headers,
-            requestBody: (pm.request.body.raw)? JSON.parse(pm.request.body.raw):{},
+            requestBody: (pm.request.method === "GET")? {} : JSON.parse(pm.request.body.raw),
             responseHeader: pm.response.headers,
             responseBody: pm.response.json(),
             responseCode: pm.response.code
