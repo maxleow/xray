@@ -110,8 +110,6 @@
             responseCode: pm.response.code
         }));
         
-        
-
         pm.sendRequest(
             {
                 url: "https://xray.cloud.getxray.app/api/v2/import/execution",
