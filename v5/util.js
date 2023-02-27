@@ -99,9 +99,18 @@
         };
 
         let test_run_key = pm.environment.get("xray_testrun_key") || pm.collectionVariables.get("xray_testrun_key");
-
+        let evidences = this.encode(JSON.stringify({
+            requestUrl: pm.request.url.toString(),
+            requestParams: pm.request.url.getQueryString(),
+            requestHeader: pm.request.headers,
+            requestBody: {},
+            responseHeader: pm.response.headers,
+            responseBody: {},
+            responseCode: pm.response.code
+        }));
+        
         try {
-            let evidences = this.encode(JSON.stringify({
+            evidences = this.encode(JSON.stringify({
                 requestUrl: pm.request.url.toString(),
                 requestParams: pm.request.url.getQueryString(),
                 requestHeader: pm.request.headers,
@@ -111,7 +120,7 @@
                 responseCode: pm.response.code
             }));
         } catch (error) {
-            let evidences = this.encode(JSON.stringify({
+            evidences = this.encode(JSON.stringify({
                 requestUrl: pm.request.url.toString(),
                 requestParams: pm.request.url.getQueryString(),
                 requestHeader: pm.request.headers,
