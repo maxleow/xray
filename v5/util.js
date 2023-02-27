@@ -130,7 +130,6 @@
                 responseCode: pm.response.code
             }));
         }
-        
 
         pm.sendRequest(
             {
