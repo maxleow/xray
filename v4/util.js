@@ -104,7 +104,7 @@
             requestUrl: pm.request.url.toString(),
             requestParams: pm.request.url.getQueryString(),
             requestHeader: pm.request.headers,
-            requestBody: (pm.request.method === "GET")? {} : JSON.parse(pm.request.body.raw),
+            requestBody: (pm.request.method === "GET" || pm.request.body === null || pm.request.body.toString().trim() === '')? {} : JSON.parse(pm.request.body.raw),
             responseHeader: pm.response.headers,
             responseBody: pm.response.json(),
             responseCode: pm.response.code
@@ -144,13 +144,13 @@
     },
     loginCsg: function(pm) {
         
-        var expiresInTime = pm.environment.get("ExpiresInTime");
-        var authUrl = pm.environment.get("Auth_Url");
-        var clientId = pm.environment.get("client_id");
-        var clientSecret = pm.environment.get("client_secret");
+        let expiresInTime = pm.environment.get("ExpiresInTime");
+        let authUrl = pm.environment.get("Auth_Url");
+        let clientId = pm.environment.get("client_id");
+        let clientSecret = pm.environment.get("client_secret");
 
-        var accessToken = pm.collectionVariables.get("OAuth_Token");
-        var tokenTimestamp = pm.collectionVariables.get("OAuth_Timestamp");
+        let accessToken = pm.collectionVariables.get("OAuth_Token");
+        let tokenTimestamp = pm.collectionVariables.get("OAuth_Timestamp");
 
         if (!clientId || !clientSecret) {
             console.log("skipping CSG Login");
@@ -158,7 +158,7 @@
         }
 
         // Refresh the OAuth token if necessary
-        var tokenDate = new Date(2022,1,1);
+        let tokenDate = new Date(2022,1,1);
         if(tokenTimestamp){
             tokenDate = Date.parse(tokenTimestamp);
         }
