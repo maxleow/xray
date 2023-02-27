@@ -100,27 +100,16 @@
 
         let test_run_key = pm.environment.get("xray_testrun_key") || pm.collectionVariables.get("xray_testrun_key");
 
-        try {
-            let evidences = this.encode(JSON.stringify({
-                requestUrl: pm.request.url.toString(),
-                requestParams: pm.request.url.getQueryString(),
-                requestHeader: pm.request.headers,
-                requestBody: (pm.request.method === "GET" || pm.request.code === 204)? {} : JSON.parse(pm.request.body.raw),
-                responseHeader: pm.response.headers,
-                responseBody: pm.response.json(),
-                responseCode: pm.response.code
-            }));
-        } catch (error) {
-            let evidences = this.encode(JSON.stringify({
-                requestUrl: pm.request.url.toString(),
-                requestParams: pm.request.url.getQueryString(),
-                requestHeader: pm.request.headers,
-                requestBody: {},
-                responseHeader: pm.response.headers,
-                responseBody: pm.response.json(),
-                responseCode: pm.response.code
-            }));
-        }
+        let evidences = this.encode(JSON.stringify({
+            requestUrl: pm.request.url.toString(),
+            requestParams: pm.request.url.getQueryString(),
+            requestHeader: pm.request.headers,
+            requestBody: (pm.request.method === "GET")? {} : JSON.parse(pm.request.body.raw),
+            responseHeader: pm.response.headers,
+            responseBody: (pm.request.code === 204)? {} : pm.response.json(),
+            responseCode: pm.response.code
+        }));
+        
         
 
         pm.sendRequest(
