@@ -108,13 +108,15 @@
             responseBody: {},
             responseCode: pm.response.code
         }));
+
+        requestCondition = pm.request.method === "GET" || pm.request.method === "DELETE"
         
         try {
             evidences = this.encode(JSON.stringify({
                 requestUrl: pm.request.url.toString(),
                 requestParams: pm.request.url.getQueryString(),
                 requestHeader: pm.request.headers,
-                requestBody: (pm.request.method === "GET")? {} : JSON.parse(pm.request.body.raw),
+                requestBody: (requestCondition)? {} : JSON.parse(pm.request.body.raw),
                 responseHeader: pm.response.headers,
                 responseBody: (pm.request.code === 204)? {} :pm.response.json(),
                 responseCode: pm.response.code
@@ -124,7 +126,7 @@
                 requestUrl: pm.request.url.toString(),
                 requestParams: pm.request.url.getQueryString(),
                 requestHeader: pm.request.headers,
-                requestBody: (pm.request.method === "GET")? {} : JSON.parse(pm.request.body.raw),
+                requestBody: (requestCondition)? {} : JSON.parse(pm.request.body.raw),
                 responseHeader: pm.response.headers,
                 responseBody: {},
                 responseCode: pm.response.code
