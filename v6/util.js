@@ -109,7 +109,7 @@
             responseCode: pm.response.code
         }));
 
-        requestCondition = pm.request.method === "GET" || pm.request.method === "DELETE"
+        let requestCondition = pm.request.method === "GET" || pm.request.method === "DELETE"
         
         try {
             evidences = this.encode(JSON.stringify({
