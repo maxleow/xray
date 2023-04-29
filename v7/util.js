@@ -161,7 +161,9 @@ const utils = {
                     })
                 }
         }, function (err, response) {
-            ctx.console.log("error: " + err);
+            if (err){
+                ctx.console.log("error: " + err);
+            }
             token = response.json();
             pm.variables.set(token_key, token);
         });
@@ -189,6 +191,7 @@ const utils = {
             requestBody = requestCondition ? {} : JSON.parse(pm.request.body.raw);
             responseBody = pm.response.code === 204 ? {} : pm.response.json();
         } catch (error) {
+            ctx.console.log("error: " + err);
             requestBody = {};
             responseBody = {};
         }
@@ -231,7 +234,9 @@ const utils = {
                 })
             }
         }, function (err, response) {
-            ctx.console.log("error: " + err);
+            if (err){
+                ctx.console.log("error: " + err);
+            }
             ctx.console.log(response.json());
         });
     },
@@ -275,6 +280,9 @@ const utils = {
                     ]
                 }
             }, function (err, res) {
+                    if (err){
+                        ctx.console.log("error: " + err);
+                    }
                     accessToken = res.json().access_token;
                     pm.collectionVariables.set("OAuth_Token", accessToken);
                     pm.collectionVariables.set("OAuth_Timestamp", new Date());
