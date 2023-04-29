@@ -1,5 +1,97 @@
 const utils = {
-    _keyStr: "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=",
+    isValidMalaysianID: (id) => {
+        // Check if the input is a string with 12 digits.
+        if (typeof id !== 'string' || id.length !== 12) {
+          return false;
+        }
+      
+        // Check if all characters are digits.
+        if (!/^\d{12}$/.test(id)) {
+          return false;
+        }
+      
+        // Extract year, month, and day.
+        const year = parseInt(id.substring(0, 2), 10) + 1900;
+        const month = parseInt(id.substring(2, 4), 10);
+        const day = parseInt(id.substring(4, 6), 10);
+      
+        // Check if the date is valid.
+        const date = new Date(year, month - 1, day);
+        if (date.getFullYear() !== year || date.getMonth() + 1 !== month || date.getDate() !== day) {
+          return false;
+        }
+      
+        // Check if the fourth pair is less than or equal to 99.
+        const fourthPair = parseInt(id.substring(6, 8), 10);
+        if (fourthPair > 99) {
+          return false;
+        }
+      
+        // Check if the ninth through eleventh digit follows the specified rule.
+        const specialNumber = parseInt(id.substring(8, 11), 10);
+        if (year <= 1999) {
+          if (specialNumber < 500 || specialNumber > 799) {
+            return false;
+          }
+        } else {
+          if (specialNumber < 0 || specialNumber > 399) {
+            return false;
+          }
+        }
+      
+        return true;
+    },
+    getDateFromNIRC: (id) => {
+        if (!id || id.length !== 12) {
+          throw new Error('Invalid ID format');
+        }
+      
+        const year = parseInt(id.substring(0, 2), 10) + 1900;
+        const month = id.substring(2, 4);
+        const day = id.substring(4, 6);
+      
+        return { year, month, day };
+    },
+    generateRandomNIRC: () => {
+        const getRandomInt = (min, max) => {
+            min = Math.ceil(min);
+            max = Math.floor(max);
+            return Math.floor(Math.random() * (max - min + 1)) + min;
+        }
+          
+        // Generate random year, month, and day.
+        const year = getRandomInt(0, 99);
+        const month = getRandomInt(1, 12);
+        const maxDay = new Date(2000 + year, month, 0).getDate();
+        const day = getRandomInt(1, maxDay);
+
+        // Generate fourth pair.
+        const fourthPair = getRandomInt(0, 99);
+
+        // Generate special number based on the birth year.
+        let specialNumber;
+        if (year <= 99) {
+            specialNumber = getRandomInt(500, 799);
+        } else {
+            specialNumber = getRandomInt(0, 399);
+        }
+
+        // Generate the last digit.
+        const lastDigit = getRandomInt(0, 9);
+
+        // Build the ID number string.
+        const id = [
+            year.toString().padStart(2, '0'),
+            month.toString().padStart(2, '0'),
+            day.toString().padStart(2, '0'),
+            fourthPair.toString().padStart(2, '0'),
+            specialNumber.toString().padStart(3, '0'),
+            lastDigit,
+        ].join('');
+
+        return id;
+    },
+    
     _utf8_encode: (string) => {
         string = string.replace(/\r\n/g, "\n");
         let utftext = "";
@@ -20,6 +112,7 @@ const utils = {
         return utftext;
     },
     encode: (input) => {
+        const keyStr = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=";
         let output = "";
         let i = 0;
         input = utils._utf8_encode(input);
@@ -37,8 +130,8 @@ const utils = {
             const enc2Enc4 = isNaN(chr2) ? 64 : enc2;
             const enc3Enc4 = isNaN(chr3) ? 64 : enc3;
 
-            output += utils._keyStr.charAt(enc1) + utils._keyStr.charAt(enc2Enc4) +
-                utils._keyStr.charAt(enc3Enc4) + utils._keyStr.charAt(enc4);
+            output += keyStr.charAt(enc1) + keyStr.charAt(enc2Enc4) +
+                keyStr.charAt(enc3Enc4) + keyStr.charAt(enc4);
         }
         return output;
     },
@@ -117,7 +210,7 @@ const utils = {
             method: "POST",
             header: {
                 "Content-Type": "application/json",
-                "Authorization": "Bearer " + utils.loginXray(pm)
+                "Authorization": "Bearer " + utils.loginXray(ctx)
             },
             body: {
                 mode: 'raw',
