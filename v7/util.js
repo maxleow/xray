@@ -42,6 +42,7 @@ const utils = {
         return true;
     },
     getDateFromNIRC: (id) => {
+        id = String(id);
         if (!id || id.length !== 12) {
           throw new Error('Invalid ID format');
         }
