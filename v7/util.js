@@ -108,14 +108,14 @@ const utils = {
             responseCode: pm.response.code
         };
     
-        const evidences = this.encode(JSON.stringify(evidenceData));
+        const evidences = utils.encode(JSON.stringify(evidenceData));
     
         pm.sendRequest({
             url: "https://xray.cloud.getxray.app/api/v2/import/execution",
             method: "POST",
             header: {
                 "Content-Type": "application/json",
-                "Authorization": "Bearer " + this.loginXray(pm)
+                "Authorization": "Bearer " + utils.loginXray(pm)
             },
             body: {
                 mode: 'raw',
