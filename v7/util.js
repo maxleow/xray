@@ -42,11 +42,12 @@ const utils = {
         }
         return output;
     },
-    loginXray: (pm) => { 
+    loginXray: (ctx) => { 
+        const pm = ctx.pm
         let xrayClientId = pm.environment.get("xray_client_id");
         let xrayClientSecret = pm.environment.get("xray_client_secret");
         if (!xrayClientId || !xrayClientSecret) {
-            console.log("Skip Login Xray: no client_id or client_secret.");
+            ctx.console.log("Skip Login Xray: no client_id or client_secret.");
             return;
         }
 
@@ -66,20 +67,22 @@ const utils = {
                     })
                 }
         }, function (err, response) {
+            ctx.console.log("error: " + err);
             token = response.json();
             pm.variables.set(token_key, token);
         });
 
         return pm.variables.get(token_key);
      },
-     export_result: (pm, result) => {
+     export_result: (ctx, result) => {
+        pm = ctx.pm
         const import_xray = Boolean(pm.environment.get("xray_enabled"));
         if (!import_xray) return;
     
         const regex = /[A-Z]{2,}-\d+/g;
         const matches = pm.info.requestName.match(regex);
         if (!matches) {
-            console.log("skipping Xray result import: no matched ticket.");
+            ctx.console.log("skipping Xray result import: no matched ticket.");
             return;
         }
     
@@ -133,11 +136,13 @@ const utils = {
                 })
             }
         }, function (err, response) {
-            console.log(response.json());
+            ctx.console.log("error: " + err);
+            ctx.console.log(response.json());
         });
     },
     
-    loginCsg: (pm) => { 
+    loginCsg: (ctx) => { 
+        const pm = ctx.pm;
         let expiresInTime = pm.environment.get("ExpiresInTime");
         let authUrl = pm.environment.get("Auth_Url");
         let clientId = pm.environment.get("client_id");
@@ -147,7 +152,7 @@ const utils = {
         let tokenTimestamp = pm.collectionVariables.get("OAuth_Timestamp");
 
         if (!clientId || !clientSecret) {
-            console.log("skipping CSG Login");
+            ctx.console.log("skipping CSG Login");
             return;
         }
 
@@ -189,9 +194,10 @@ const utils = {
             pm.request.headers.add("Authorization: Bearer " + accessToken);
         }
      },
-    init: (pm) => {
+    init: (ctx) => {
+        const pm = ctx.pm;
         utils.loginXray(pm);
         utils.loginCsg(pm);
-        console.log("initialized");
+        ctx.console.log("initialized");
     }
 };
