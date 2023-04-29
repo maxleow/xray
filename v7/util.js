@@ -41,21 +41,14 @@ const utils = {
       
         return true;
     },
-    getDateFromNIRC: (ctx, id) => {
-        ctx.console.log(id);
-        id = String(id);
+    getDateFromNIRC: (id) => {
         if (!id || id.length !== 12) {
           throw new Error('Invalid ID format');
         }
       
         const year = parseInt(id.substring(0, 2), 10) + 1900;
-        ctx.console.log(year);
-
         const month = id.substring(2, 4);
-        ctx.console.log(month);
-        
         const day = id.substring(4, 6);
-        ctx.console.log(day);
       
         return { year, month, day };
     },
