@@ -196,8 +196,8 @@ const utils = {
      },
     init: (ctx) => {
         const pm = ctx.pm;
-        utils.loginXray(pm);
-        utils.loginCsg(pm);
+        utils.loginXray(ctx);
+        utils.loginCsg(ctx);
         ctx.console.log("initialized");
     }
 };
