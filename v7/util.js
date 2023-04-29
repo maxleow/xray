@@ -44,6 +44,7 @@ const utils = {
     },
     loginXray: (ctx) => { 
         const pm = ctx.pm
+        ctx.console.log("Logging in to Xray.")
         let xrayClientId = pm.environment.get("xray_client_id");
         let xrayClientSecret = pm.environment.get("xray_client_secret");
         if (!xrayClientId || !xrayClientSecret) {
@@ -76,6 +77,7 @@ const utils = {
      },
      export_result: (ctx, result) => {
         pm = ctx.pm
+        ctx.console.log("Exporting result to Xray");
         const import_xray = Boolean(pm.environment.get("xray_enabled"));
         if (!import_xray) return;
     
@@ -143,6 +145,7 @@ const utils = {
     
     loginCsg: (ctx) => { 
         const pm = ctx.pm;
+        ctx.console.log("Logging to CSG");
         let expiresInTime = pm.environment.get("ExpiresInTime");
         let authUrl = pm.environment.get("Auth_Url");
         let clientId = pm.environment.get("client_id");
@@ -195,7 +198,6 @@ const utils = {
         }
      },
     init: (ctx) => {
-        const pm = ctx.pm;
         utils.loginXray(ctx);
         utils.loginCsg(ctx);
         ctx.console.log("initialized");
