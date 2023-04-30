@@ -2,7 +2,7 @@ const utils = {
   attach_evidence_to_jira: (ctx, jira_key, evidence, filename) => {
     pm = ctx.pm;
     const text = JSON.stringify(evidence, null, 2);
-    const auth = btoa(
+    const auth = ctx.btoa(
       `${pm.environment.get("jira_account_email")}:${pm.environment.get(
         "jira_token"
       )}`
