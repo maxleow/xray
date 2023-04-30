@@ -286,19 +286,28 @@ const utils = {
       requestBody = {};
       responseBody = {};
     }
-
     const evidenceData = {
-      requestUrl: pm.request.url.toString(),
-      requestParams: pm.request.url.getQueryString(),
-      requestHeader: pm.request.headers,
-      requestBody: requestBody,
-      responseHeader: pm.response.headers,
-      responseBody: responseBody,
-      responseCode: pm.response.code,
+        requestUrl: pm.request.url.toString(),
+        requestParams: pm.request.url.getQueryString(),
+        requestHeader: pm.request.headers,
+        requestBody: requestBody,
+        responseHeader: pm.response.headers,
+        responseBody: responseBody,
+        responseCode: pm.response.code,
     };
-    const filename = test_run_key + "_" + matches[0] + "_" + new Date().toISOString() +".json";
+    const cases = pm.variables.get(pm.info.requestName);
+    if (cases) {
+        evidenceData['tests'] = cases;
+    }
+    const filename =
+      test_run_key +
+      "_" +
+      matches[0] +
+      "_" +
+      new Date().toISOString() +
+      ".json";
     const evidences = utils.encode(JSON.stringify(evidenceData));
-    utils.attach_evidence_to_jira(ctx, matches[0], evidenceData, filename)
+    utils.attach_evidence_to_jira(ctx, matches[0], evidenceData, filename);
 
     pm.sendRequest(
       {
