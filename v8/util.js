@@ -287,17 +287,17 @@ const utils = {
       responseBody = {};
     }
     const evidenceData = {
-        requestUrl: pm.request.url.toString(),
-        requestParams: pm.request.url.getQueryString(),
-        requestHeader: pm.request.headers,
-        requestBody: requestBody,
-        responseHeader: pm.response.headers,
-        responseBody: responseBody,
-        responseCode: pm.response.code,
+      requestUrl: pm.request.url.toString(),
+      requestParams: pm.request.url.getQueryString(),
+      requestHeader: pm.request.headers,
+      requestBody: requestBody,
+      responseHeader: pm.response.headers,
+      responseBody: responseBody,
+      responseCode: pm.response.code,
     };
     const cases = pm.variables.get(pm.info.requestName);
     if (cases) {
-        evidenceData['tests'] = cases;
+      evidenceData["tests"] = cases;
     }
     const filename =
       test_run_key +
