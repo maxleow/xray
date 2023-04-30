@@ -288,6 +288,7 @@ const utils = {
     }
     const evidenceData = {
       requestUrl: pm.request.url.toString(),
+      requestMehtod: pm.request.method,
       requestParams: pm.request.url.getQueryString(),
       requestHeader: pm.request.headers,
       requestBody: requestBody,
