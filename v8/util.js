@@ -61,11 +61,11 @@ const utils = {
             error: null,
           };
           try {
-            testFunction(testName);
-            run["status"] = pm.variables.get(testName);
+            testFunction();
+            run["status"] = "PASSED";
             runs["cases"].push(run);
           } catch (error) {
-            run["status"] = pm.variables.get(testName);
+            run["status"] = "FAILED";
             run["error"] = error.message;
             runs["cases"].push(run);
             throw error;
