@@ -299,6 +299,7 @@ const utils = {
     const cases = pm.variables.get(pm.info.requestName);
     if (cases) {
       evidenceData["tests"] = cases;
+      pm.variables.set(pm.info.requestName, []);
     }
     const filename =
       test_run_key +
