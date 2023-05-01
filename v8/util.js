@@ -64,7 +64,12 @@ const utils = {
             testFunction();
             run["status"] = "PASSED";
             runs["cases"].push(run);
+            const hasFailed = runs["cases"].some(caseItem => caseItem.status === "FAILED");
+            const result = hasFailed ? "FAILED" : "PASSED";
+            pm.variables.set("result", result);
+
           } catch (error) {
+            pm.variables.set("result", "FAILED");
             run["status"] = "FAILED";
             run["error"] = error.message;
             runs["cases"].push(run);
