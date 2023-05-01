@@ -1,6 +1,6 @@
 const utils = {
   attach_evidence_to_jira: (ctx, jira_key, evidence, filename) => {
-    pm = ctx.pm;
+    const pm = ctx.pm;
     const text = JSON.stringify(evidence, null, 2);
     const auth = ctx.btoa(
       `${pm.environment.get("jira_account_email")}:${pm.environment.get(
@@ -259,7 +259,7 @@ const utils = {
     return pm.variables.get(token_key);
   },
   export_result: (ctx, result) => {
-    pm = ctx.pm;
+    const pm = ctx.pm;
     ctx.console.log("Exporting result to Xray");
     const import_xray = Boolean(pm.environment.get("xray_enabled"));
     if (!import_xray) return;
