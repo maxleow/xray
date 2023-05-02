@@ -287,7 +287,7 @@ const utils = {
       requestBody = requestCondition ? {} : JSON.parse(pm.request.body.raw);
       responseBody = pm.response.code === 204 ? {} : pm.response.json();
     } catch (error) {
-      ctx.console.log("error: " + err);
+      ctx.console.log("error: " + error);
       requestBody = {};
       responseBody = {};
     }
