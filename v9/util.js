@@ -49,6 +49,7 @@ const utils = {
   },
   tests: {
     start: (ctx, cases) => {
+
       Object.entries(cases).forEach(([testName, testFunction]) => {
         pm = ctx.pm;
         pm.test(testName, () => {
@@ -61,7 +62,7 @@ const utils = {
             status: null,
             error: null,
           };
-          ctx.console("run object in tests:", run);
+          ctx.console.log("run object in tests:", run);
           try {
             testFunction();
             run["status"] = "PASSED";
