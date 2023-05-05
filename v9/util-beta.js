@@ -62,7 +62,6 @@ const utils = {
             status: null,
             error: null,
           };
-          ctx.console.log("run object in tests:", run);
           try {
             testFunction();
             run["status"] = "PASSED";
@@ -76,7 +75,7 @@ const utils = {
             ctx.console.log(error);
             pm.variables.set("result", "FAILED");
             run["status"] = "FAILED";
-            run["error"] = error.message;
+            run["error"] = error;
             runs["cases"].push(run);
             throw error;
           } finally {
