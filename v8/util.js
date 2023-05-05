@@ -50,6 +50,7 @@ const utils = {
   tests: {
     start: (pm, cases) => {
       Object.entries(cases).forEach(([testName, testFunction]) => {
+        pm.variables.set("result", "FAILED");
         pm.test(testName, () => {
           runs = pm.variables.get(pm.info.requestName);
           if (!runs) {
@@ -69,7 +70,6 @@ const utils = {
             pm.variables.set("result", result);
 
           } catch (error) {
-            pm.variables.set("result", "FAILED");
             run["status"] = "FAILED";
             run["error"] = error.message;
             runs["cases"].push(run);
