@@ -51,14 +51,14 @@ const utils = {
     start: (ctx, cases) => {
 
       Object.entries(cases).forEach(([testName, testFunction]) => {
-        pm = ctx.pm;
+        const pm = ctx.pm;
         pm.variables.set("result", "FAILED");
         pm.test(testName, () => {
-          runs = pm.variables.get(pm.info.requestName);
+          let runs = pm.variables.get(pm.info.requestName);
           if (!runs) {
             runs = { cases: [] };
           }
-          run = {
+          let run = {
             testName: testName,
             status: null,
             error: null,
