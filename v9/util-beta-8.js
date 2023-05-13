@@ -143,7 +143,7 @@ const utils = {
 
     return { year, month, day };
   },
-  generateRandomNIRC : (startYear = 1980, bornAbroad = false) => {
+  generateRandomNIRC : (startYear = 1980, bornAbroad = false, pbCodeParam=undefined) => {
     const getRandomInt = (min, max) => {
       min = Math.ceil(min);
       max = Math.floor(max);
@@ -174,7 +174,7 @@ const utils = {
     const day = getRandomInt(1, maxDay);
   
     // Generate place of birth.
-    const pbCode = bornAbroad ? pbCodesAbroad[getRandomInt(0, pbCodesAbroad.length - 1)] : pbCodesMalaysia[getRandomInt(0, pbCodesMalaysia.length - 1)];
+    const pbCode = pbCodeParam? pbCodeParam: (bornAbroad ? pbCodesAbroad[getRandomInt(0, pbCodesAbroad.length - 1)] : pbCodesMalaysia[getRandomInt(0, pbCodesMalaysia.length - 1)]);
   	console.log("pbCode", pbCode)
     // Generate special number based on the birth year.
     let specialNumber;
