@@ -192,11 +192,24 @@ const utils = {
     if (!id || id.length !== 12) {
       throw new Error("Invalid ID format");
     }
-
-    const year = parseInt(id.substring(0, 2), 10) + 1900;
+  
+    let year = parseInt(id.substring(0, 2), 10);
+    const currentYear = new Date().getFullYear();
+    const currentShortYear = currentYear % 100; // get the last two digits of the current year
+  
+    if (year <= currentShortYear) {
+      year += 2000;
+    } else {
+      year += 1900;
+    }
+  
     const month = id.substring(2, 4);
     const day = id.substring(4, 6);
-
+  
+    if (year > currentYear) {
+      throw new Error("The year cannot be in the future");
+    }
+  
     return { year, month, day };
   },
   generateRandomNIRC: (
