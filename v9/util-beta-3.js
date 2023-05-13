@@ -165,7 +165,7 @@ const utils = {
     const currentYear = new Date().getFullYear();
   
     // Generate random year, month, and day.
-    const year = getRandomInt(startYear - 2000, currentYear - 2000 - 2);
+    const year = getRandomInt(startYear - 1900, currentYear - 1900 - 2);
     const month = getRandomInt(1, 12);
     const maxDay = new Date(2000 + year, month, 0).getDate();
     const day = getRandomInt(1, maxDay);
@@ -177,7 +177,7 @@ const utils = {
   
     // Generate special number based on the birth year.
     let specialNumber;
-    if (year < 0) {
+    if (year < 100) {
       specialNumber = getRandomInt(500, 799);
     } else {
       specialNumber = getRandomInt(0, 399);
@@ -195,7 +195,7 @@ const utils = {
       specialNumber.toString().padStart(3, "0"),
       lastDigit,
     ].join("");
-  
+
     return id;
   },
 
