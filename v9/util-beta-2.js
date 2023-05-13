@@ -142,30 +142,42 @@ const utils = {
 
     return { year, month, day };
   },
-  generateRandomNIRC: (inputStartYear = 1980) => {
+  generateRandomNIRC: (startYear = 1980, bornAbroad = false) => {
     const getRandomInt = (min, max) => {
       min = Math.ceil(min);
       max = Math.floor(max);
       return Math.floor(Math.random() * (max - min + 1)) + min;
     };
   
-    // Calculate start year and end year.
+    // Array of all valid PB codes
+    const pbCodesMalaysia = [ 
+      01, 02, 03, 04, 05, 06, 07, 08, 09, 10, 11, 12, 13, 14, 15, 16, 21, 22, 23, 24, 25, 
+      26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 
+      47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59
+    ];
+  
+    const pbCodesAbroad = [ 
+      60, 61, 62, 63, 64, 65, 66, 67, 68, 71, 72, 74, 75, 76, 77, 78, 79, 82, 83, 84, 85, 
+      86, 87, 88, 89, 90, 91, 92, 93, 98, 99
+    ];
+  
+    // Get current year
     const currentYear = new Date().getFullYear();
-    const startYear = inputStartYear - 2000;
-    const endYear = currentYear - 2 - 2000; // 2 years before current year.
   
     // Generate random year, month, and day.
-    const year = getRandomInt(startYear, endYear);
+    const year = getRandomInt(startYear - 2000, currentYear - 2000 - 2);
     const month = getRandomInt(1, 12);
     const maxDay = new Date(2000 + year, month, 0).getDate();
     const day = getRandomInt(1, maxDay);
   
-    // Generate fourth pair.
-    const fourthPair = getRandomInt(0, 99);
+    // Generate place of birth code.
+    const pb = bornAbroad 
+      ? pbCodesAbroad[getRandomInt(0, pbCodesAbroad.length - 1)] 
+      : pbCodesMalaysia[getRandomInt(0, pbCodesMalaysia.length - 1)];
   
     // Generate special number based on the birth year.
     let specialNumber;
-    if (year <= 99) {
+    if (year < 0) {
       specialNumber = getRandomInt(500, 799);
     } else {
       specialNumber = getRandomInt(0, 399);
@@ -179,7 +191,7 @@ const utils = {
       year.toString().padStart(2, "0"),
       month.toString().padStart(2, "0"),
       day.toString().padStart(2, "0"),
-      fourthPair.toString().padStart(2, "0"),
+      pb,
       specialNumber.toString().padStart(3, "0"),
       lastDigit,
     ].join("");
