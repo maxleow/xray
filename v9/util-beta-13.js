@@ -425,10 +425,10 @@ getRandomName: () => {
   },
   export_result: (ctx, result) => {
     const pm = ctx.pm;
-    ctx.console.log("Exporting result to Xray");
     const import_xray = Boolean(pm.environment.get("xray_enabled"));
     if (!import_xray || import_xray !== "true") return;
-
+    
+    ctx.console.log("Exporting result to Xray");
     const regex = /[A-Z]{2,}-\d+/g;
     const matches = pm.info.requestName.match(regex);
     if (!matches) {
