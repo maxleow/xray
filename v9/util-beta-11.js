@@ -396,7 +396,7 @@ getRandomName: () => {
     }
 
     let token_key = "xray_token";
-    const token = pm.variables.get(token_key);
+    let token = pm.variables.get(token_key);
     if (token) return token;
 
     pm.sendRequest(
