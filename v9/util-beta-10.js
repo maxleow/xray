@@ -390,12 +390,12 @@ getRandomName: () => {
     const xrayEnabled = pm.environment.get("xray_enabled");
     
     ctx.console.log(xrayEnabled, typeof(xrayEnabled));
-    if (!xrayClientId || !xrayClientSecret) {
+    if (!xrayClientId || !xrayClientSecret || xrayEnabled !== "true") {
       ctx.console.log("Skip Login Xray: no client_id or client_secret.");
       return;
     }
 
-    const token_key = "xray_token";
+    let token_key = "xray_token";
     const token = pm.variables.get(token_key);
     if (token) return token;
 
